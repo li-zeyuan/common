@@ -9,10 +9,10 @@ import (
 func getWriter(filename string) io.Writer {
 	return &lumberjack.Logger{
 		Filename:   filename,
-		MaxSize:    option.MaxSize, // Mb
-		MaxBackups: option.MaxBackup,
-		MaxAge:     option.MaxAge,
-		Compress:   option.IsCompress,
+		MaxSize:    config.MaxSize, // Mb
+		MaxBackups: config.MaxBackup,
+		MaxAge:     config.MaxAge,
+		Compress:   config.IsCompress,
 	}
 }
 

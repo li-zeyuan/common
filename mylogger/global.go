@@ -4,13 +4,24 @@ import "go.uber.org/zap"
 
 var logger *Logger
 
-func Init(options ...optionFun) error {
-	if len(options) == 0 {
+func Init(cfg *LoggerCfg) error {
+	options := make([]optionFun, 0)
+	if cfg == nil {
 		options = defaultOptions
+	} else {
+		options = append(options,
+			WhitLevel(cfg.Level),
+			WhitLoggingDir(cfg.LoggingDir),
+			WhitMaxSize(cfg.MaxSize),
+			WhitMaxAge(cfg.MaxAge),
+			WhitMaxBackup(cfg.MaxBackup),
+			WhitIsCompress(cfg.IsCompress),
+			WhitIsConsole(cfg.IsConsole),
+		)
 	}
 
-	for _, o := range options{
-		o(option)
+	for _, o := range options {
+		o(cfg)
 	}
 
 	var err error

@@ -15,7 +15,7 @@ type Logger struct {
 }
 
 func NewZap() (*Logger, error) {
-	level, err := zapcore.ParseLevel(option.Level)
+	level, err := zapcore.ParseLevel(config.Level)
 	if err != nil {
 		log.Println("parse level error", err)
 		return nil, err
@@ -44,16 +44,16 @@ func NewZap() (*Logger, error) {
 	encoder := zapcore.NewConsoleEncoder(zap.NewDevelopmentEncoderConfig())
 
 	cores := make([]zapcore.Core, 0)
-	if option.IsConsole {
+	if config.IsConsole {
 		cores = append(
 			cores,
 			zapcore.NewCore(encoder, zapcore.NewMultiWriteSyncer(zapcore.AddSync(os.Stdout)), consoleFunc))
 	}
 
 	cores = append(cores,
-		zapcore.NewCore(encoder, zapcore.AddSync(getWriter(option.LoggingDir+"/debug.log")), debugFunc),
-		zapcore.NewCore(encoder, zapcore.AddSync(getWriter(option.LoggingDir+"/info.log")), infoFunc),
-		zapcore.NewCore(encoder, zapcore.AddSync(getWriter(option.LoggingDir+"/error.log")), errFunc),
+		zapcore.NewCore(encoder, zapcore.AddSync(getWriter(config.LoggingDir+"/debug.log")), debugFunc),
+		zapcore.NewCore(encoder, zapcore.AddSync(getWriter(config.LoggingDir+"/info.log")), infoFunc),
+		zapcore.NewCore(encoder, zapcore.AddSync(getWriter(config.LoggingDir+"/error.log")), errFunc),
 	)
 
 	zapOptions := []zap.Option{

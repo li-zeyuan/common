@@ -1,6 +1,7 @@
 package mylogger
 
-var option = &Option{}
+var config = &LoggerCfg{}
+
 var defaultOptions = []optionFun{
 	WhitLevel("info"),
 	WhitLoggingDir("logs"),
@@ -11,7 +12,7 @@ var defaultOptions = []optionFun{
 	WhitIsConsole(true),
 }
 
-type Option struct {
+type LoggerCfg struct {
 	Level      string `yaml:"level"`
 	LoggingDir string `yaml:"dir"`
 	IsCompress bool   `yaml:"is_compress"`
@@ -21,46 +22,46 @@ type Option struct {
 	MaxBackup  int    `yaml:"max_backup"`
 }
 
-type optionFun = func(o *Option)
+type optionFun = func(o *LoggerCfg)
 
 func WhitLevel(level string) optionFun {
-	return func(o *Option) {
+	return func(o *LoggerCfg) {
 		o.Level = level
 	}
 }
 
 func WhitLoggingDir(dir string) optionFun {
-	return func(o *Option) {
+	return func(o *LoggerCfg) {
 		o.LoggingDir = dir
 	}
 }
 
 func WhitMaxSize(maxSize int) optionFun {
-	return func(o *Option) {
+	return func(o *LoggerCfg) {
 		o.MaxSize = maxSize
 	}
 }
 
 func WhitMaxAge(maxAge int) optionFun {
-	return func(o *Option) {
+	return func(o *LoggerCfg) {
 		o.MaxAge = maxAge
 	}
 }
 
 func WhitMaxBackup(maxBackup int) optionFun {
-	return func(o *Option) {
+	return func(o *LoggerCfg) {
 		o.MaxBackup = maxBackup
 	}
 }
 
 func WhitIsCompress(isCompress bool) optionFun {
-	return func(o *Option) {
+	return func(o *LoggerCfg) {
 		o.IsCompress = isCompress
 	}
 }
 
 func WhitIsConsole(isConsole bool) optionFun {
-	return func(o *Option) {
+	return func(o *LoggerCfg) {
 		o.IsConsole = isConsole
 	}
 }
