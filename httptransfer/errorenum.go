@@ -23,5 +23,5 @@ var (
 
 // login
 var (
-	ErrorPassportExist = ErrorCode{Code: 200, Msg: "passport exist"}
+	ErrorLoginForbid = ErrorCode{Code: 101000, Msg: "账号禁止登陆，请向管理员提交反馈信息"}
 )

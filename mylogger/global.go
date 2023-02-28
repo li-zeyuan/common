@@ -21,7 +21,7 @@ func Init(cfg *LoggerCfg) error {
 	}
 
 	for _, o := range options {
-		o(cfg)
+		o(config)
 	}
 
 	var err error
