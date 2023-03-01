@@ -20,7 +20,7 @@ func SuccJSONResp(c *gin.Context, data interface{}) {
 	c.JSON(http.StatusOK, resp)
 }
 
-func ErrJSONResp(c *gin.Context, err error) {
+func ErrJSONResp(c *gin.Context,httpCode int, err error) {
 	if err == nil {
 		return
 	}
@@ -33,5 +33,5 @@ func ErrJSONResp(c *gin.Context, err error) {
 		resp.Msg = errEnum.Msg
 	}
 
-	c.JSON(http.StatusInternalServerError, resp)
+	c.JSON(httpCode, resp)
 }
