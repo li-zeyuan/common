@@ -1,7 +1,6 @@
 package httptransfer
 
 import (
-	"context"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -10,18 +9,16 @@ import (
 	"github.com/li-zeyuan/common/utils"
 )
 
-type uIdCtxKey string
+var uIdCtxKey = "uid"
 
-var uId uIdCtxKey = "uid"
-
-func JwtMiddleware() gin.HandlerFunc {
+func JwtMiddleware(secretKey string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenStr := c.GetHeader("Authorization")
 		token, err := jwt.ParseWithClaims(tokenStr, &utils.JwtClaims{}, func(token *jwt.Token) (interface{}, error) {
-			return []byte(utils.SecretKey), nil
+			return []byte(secretKey), nil
 		})
 		if err != nil {
-			ErrJSONResp(c,http.StatusForbidden, err)
+			ErrJSONResp(c, http.StatusForbidden, err)
 			return
 		}
 
@@ -29,29 +26,21 @@ func JwtMiddleware() gin.HandlerFunc {
 		if ok && token.Valid {
 			mylogger.Infof("uid: %d", claims.Uid)
 		} else {
-			ErrJSONResp(c,http.StatusForbidden, err)
+			ErrJSONResp(c, http.StatusForbidden, err)
 			return
 		}
 
-		ctx := c.Request.Context()
-		newCtx := context.WithValue(ctx, uId, claims.Uid)
-		c.Request.WithContext(newCtx)
-
+		c.Set(uIdCtxKey, claims.Uid)
 		c.Next()
 	}
 }
 
-func GetUid(c context.Context) int64 {
-	if c == nil {
-		mylogger.Error("content is nil")
-		return 0
-	}
-
-	uid, ok := c.Value(uId).(int64)
+func GetUid(c *gin.Context) int64 {
+	val, ok := c.Get(uIdCtxKey)
 	if !ok {
 		mylogger.Error("can not transfer uIdCtxKey")
 		return 0
 	}
 
-	return uid
+	return val.(int64)
 }

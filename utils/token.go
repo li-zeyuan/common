@@ -2,16 +2,11 @@ package utils
 
 import (
 	"errors"
-	"os"
 	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
 )
-
-const secretEnvKey = "moon_jwt_secret"
-
-var SecretKey = os.Getenv(secretEnvKey)
 
 type JwtClaims struct {
 	Uid            int64
@@ -30,14 +25,14 @@ func (j JwtClaims) Valid() error {
 	return nil
 }
 
-func GenerateToken(uid int64, expireDuration time.Duration) (string, error) {
+func GenerateToken(uid int64, expireDuration time.Duration, secretKey string) (string, error) {
 	expire := time.Now().Add(expireDuration)
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, JwtClaims{
-		Uid:  uid,
+		Uid: uid,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: expire.Unix(),
 		},
 	})
 
-	return token.SignedString([]byte(SecretKey))
+	return token.SignedString([]byte(secretKey))
 }

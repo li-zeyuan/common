@@ -1,6 +1,7 @@
 package utils
 
 import (
+	"os"
 	"testing"
 	"time"
 
@@ -8,7 +9,7 @@ import (
 )
 
 func TestGenerateToken(t *testing.T) {
-	token, err := GenerateToken(318861102280601344, time.Hour*24*30)
+	token, err := GenerateToken(100000000000000000, time.Hour*24*30, os.Getenv("jwt_secret"))
 	assert.Equal(t, err, nil)
 	t.Log(token)
 }
