@@ -6,7 +6,7 @@ import (
 	"gopkg.in/natefinch/lumberjack.v2"
 )
 
-func getWriter(filename string) io.Writer {
+func GetWriter(filename string) io.Writer {
 	return &lumberjack.Logger{
 		Filename:   filename,
 		MaxSize:    config.MaxSize, // Mb

@@ -51,9 +51,9 @@ func NewZap() (*Logger, error) {
 	}
 
 	cores = append(cores,
-		zapcore.NewCore(encoder, zapcore.AddSync(getWriter(config.LoggingDir+"/debug.log")), debugFunc),
-		zapcore.NewCore(encoder, zapcore.AddSync(getWriter(config.LoggingDir+"/info.log")), infoFunc),
-		zapcore.NewCore(encoder, zapcore.AddSync(getWriter(config.LoggingDir+"/error.log")), errFunc),
+		zapcore.NewCore(encoder, zapcore.AddSync(GetWriter(config.LoggingDir+"/debug.log")), debugFunc),
+		zapcore.NewCore(encoder, zapcore.AddSync(GetWriter(config.LoggingDir+"/info.log")), infoFunc),
+		zapcore.NewCore(encoder, zapcore.AddSync(GetWriter(config.LoggingDir+"/error.log")), errFunc),
 	)
 
 	zapOptions := []zap.Option{
