@@ -2,6 +2,10 @@ package utils
 
 import "time"
 
+func NowUTC() time.Time {
+	return time.Now().UTC()
+}
+
 func TimeStamp2Time(tStamp int64) time.Time {
 	return time.Unix(tStamp, 0)
 }

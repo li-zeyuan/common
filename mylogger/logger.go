@@ -1,6 +1,10 @@
 package mylogger
 
 import (
+	"context"
+	"strings"
+
+	"github.com/li-zeyuan/common/utils"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 )
@@ -9,43 +13,52 @@ func DebugEnable() bool {
 	return logger.level >= zapcore.DebugLevel
 }
 
-func Debug(msg string, fields ...zap.Field) {
+func Debug(ctx context.Context, msg string, fields ...zap.Field) {
+	fields = append(fields, zap.Field{Key: utils.RequestIdKey, Type: zapcore.StringType, String: utils.GetRequestID(ctx)})
 	logger.Debug(msg, fields...)
 }
 
-func Info(msg string, fields ...zap.Field) {
+func Info(ctx context.Context, msg string, fields ...zap.Field) {
+	fields = append(fields, zap.Field{Key: utils.RequestIdKey, Type: zapcore.StringType, String: utils.GetRequestID(ctx)})
 	logger.Info(msg, fields...)
 }
 
-func Warn(msg string, fields ...zap.Field) {
+func Warn(ctx context.Context, msg string, fields ...zap.Field) {
+	fields = append(fields, zap.Field{Key: utils.RequestIdKey, Type: zapcore.StringType, String: utils.GetRequestID(ctx)})
 	logger.Warn(msg, fields...)
 }
 
-func Error(msg string, fields ...zap.Field) {
+func Error(ctx context.Context, msg string, fields ...zap.Field) {
+	fields = append(fields, zap.Field{Key: utils.RequestIdKey, Type: zapcore.StringType, String: utils.GetRequestID(ctx)})
 	logger.Error(msg, fields...)
 }
 
-func Fatal(msg string, fields ...zap.Field) {
+func Fatal(ctx context.Context, msg string, fields ...zap.Field) {
+	fields = append(fields, zap.Field{Key: utils.RequestIdKey, Type: zapcore.StringType, String: utils.GetRequestID(ctx)})
 	logger.Fatal(msg, fields...)
 }
 
-func Debugf(template string, args ...interface{}) {
+func Debugf(ctx context.Context, template string, args ...interface{}) {
+	template = strings.Join([]string{template,"|", utils.RequestIdKey, ":", utils.GetRequestID(ctx)}, "")
 	logger.Debugf(template, args...)
 }
 
-func Infof(template string, args ...interface{}) {
+func Infof(ctx context.Context, template string, args ...interface{}) {
+	template = strings.Join([]string{template,"|", utils.RequestIdKey, ":", utils.GetRequestID(ctx)}, "")
 	logger.Infof(template, args...)
 }
 
-func Warnf(template string, args ...interface{}) {
+func Warnf(ctx context.Context, template string, args ...interface{}) {
+	template = strings.Join([]string{template,"|", utils.RequestIdKey, ":", utils.GetRequestID(ctx)}, "")
 	logger.Warnf(template, args...)
 }
 
-func Errorf(template string, args ...interface{}) {
+func Errorf(ctx context.Context, template string, args ...interface{}) {
+	template = strings.Join([]string{template,"|", utils.RequestIdKey, ":", utils.GetRequestID(ctx)}, "")
 	logger.Errorf(template, args...)
 }
 
-func Fatalf(template string, args ...interface{}) {
+func Fatalf(ctx context.Context, template string, args ...interface{}) {
+	template = strings.Join([]string{template,"|", utils.RequestIdKey, ":", utils.GetRequestID(ctx)}, "")
 	logger.Fatalf(template, args...)
 }
-

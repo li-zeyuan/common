@@ -24,7 +24,7 @@ func JwtMiddleware(secretKey string) gin.HandlerFunc {
 
 		claims, ok := token.Claims.(*utils.JwtClaims)
 		if ok && token.Valid {
-			mylogger.Infof("uid: %d", claims.Uid)
+			mylogger.Infof(c.Request.Context(), "uid: %d", claims.Uid)
 		} else {
 			ErrJSONResp(c, http.StatusForbidden, err)
 			return
@@ -38,7 +38,7 @@ func JwtMiddleware(secretKey string) gin.HandlerFunc {
 func GetUid(c *gin.Context) int64 {
 	val, ok := c.Get(uIdCtxKey)
 	if !ok {
-		mylogger.Error("can not transfer uIdCtxKey")
+		mylogger.Warn(c.Request.Context(),"can not transfer uIdCtxKey")
 		return 0
 	}
 

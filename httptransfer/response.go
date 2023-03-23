@@ -13,6 +13,9 @@ type JsonResponse struct {
 }
 
 func SuccJSONResp(c *gin.Context, data interface{}) {
+	if data == nil {
+		data = struct {}{}
+	}
 	resp := JsonResponse{
 		Data: data,
 	}
@@ -34,4 +37,5 @@ func ErrJSONResp(c *gin.Context,httpCode int, err error) {
 	}
 
 	c.JSON(httpCode, resp)
+	c.Abort()
 }

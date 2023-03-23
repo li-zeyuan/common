@@ -1,6 +1,7 @@
 package external
 
 import (
+	"context"
 	"encoding/json"
 	"fmt"
 	"net/http"
@@ -27,11 +28,11 @@ func NewWechat(appId, secret string) *Wechat {
 	}
 }
 
-func (w *Wechat) QueryWxSession(code string) (*model.WXSessionRet, error) {
+func (w *Wechat) QueryWxSession(ctx context.Context, code string) (*model.WXSessionRet, error) {
 	url := fmt.Sprintf(baseWXSessionUrl, w.AppId, w.Secret, code)
 	resp, err := http.Get(url)
 	if err != nil {
-		mylogger.Error("get weChat session error: ", zap.Error(err))
+		mylogger.Error(ctx ,"get weChat session error: ", zap.Error(err))
 		return nil, err
 	}
 	defer resp.Body.Close()
@@ -45,7 +46,7 @@ func (w *Wechat) QueryWxSession(code string) (*model.WXSessionRet, error) {
 
 	// 判断微信接口返回的是否是一个异常情况
 	if wxResp.ErrCode != 0 {
-		mylogger.Error("weChat session code error: ", zap.String("err_msg", wxResp.ErrMsg))
+		mylogger.Error(ctx,"weChat session code error: ", zap.String("err_msg", wxResp.ErrMsg))
 		return nil, httptransfer.ErrorCode{Code: wxResp.ErrCode, Msg: wxResp.ErrMsg}
 	}
 

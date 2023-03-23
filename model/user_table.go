@@ -7,6 +7,7 @@ const (
 
 const (
 	TableNameUserProfile = "user_profile"
+	DefaultStudyNum      = 100
 )
 
 type UserProfileTable struct {
@@ -18,4 +19,5 @@ type UserProfileTable struct {
 	SessionKey       string // session_key
 	CurrentSubjectId int64  // 当前学习题库
 	StudyTotal       int    // 累计学习天数
+	StudyNum         int    // 今日学习数量
 }
