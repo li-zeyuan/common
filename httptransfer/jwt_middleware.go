@@ -11,7 +11,31 @@ import (
 
 var uIdCtxKey = "uid"
 
-func JwtMiddleware(secretKey string) gin.HandlerFunc {
+func NotStrictAuthorizationMiddleware(secretKey string) gin.HandlerFunc {
+	return func(c *gin.Context) {
+		tokenStr := c.GetHeader("Authorization")
+		token, err := jwt.ParseWithClaims(tokenStr, &utils.JwtClaims{}, func(token *jwt.Token) (interface{}, error) {
+			return []byte(secretKey), nil
+		})
+		if err != nil {
+			c.Next()
+			return
+		}
+
+		claims, ok := token.Claims.(*utils.JwtClaims)
+		if ok && token.Valid {
+			mylogger.Infof(c.Request.Context(), "uid: %d", claims.Uid)
+		} else {
+			c.Next()
+			return
+		}
+
+		c.Set(uIdCtxKey, claims.Uid)
+		c.Next()
+	}
+}
+
+func StrictAuthorizationMiddleware(secretKey string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		tokenStr := c.GetHeader("Authorization")
 		token, err := jwt.ParseWithClaims(tokenStr, &utils.JwtClaims{}, func(token *jwt.Token) (interface{}, error) {
