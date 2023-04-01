@@ -6,6 +6,10 @@ const (
 	DefaultDelCondition    = "deleted_at = 0"
 	UpdatedAtDESCCondition = "updated_at desc"
 	IDASCCondition         = "id asc"
+
+	ColumnUpdatedAt = "updated_at"
+	ColumnCreatedAt = "created_at"
+	ColumnDeletedAt = "deleted_at"
 )
 
 type BaseModel struct {

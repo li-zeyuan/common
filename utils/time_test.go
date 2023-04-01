@@ -12,3 +12,7 @@ func TestParseDay(t *testing.T) {
 	t.Log(date)
 	t.Log(err)
 }
+
+func TestTodayStartUTC(t *testing.T)  {
+	t.Log(TodayStartUTC())
+}
