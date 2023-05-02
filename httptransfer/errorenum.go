@@ -26,3 +26,6 @@ var (
 	ErrorLoginForbid  = ErrorCode{Code: 101000, Msg: "账号禁止登陆，请向管理员提交反馈信息"}
 	ErrorInvaildToken = ErrorCode{Code: 101001, Msg: "Token已失效，请重新登陆"}
 )
+
+// highlight exam
+var ()
