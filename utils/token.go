@@ -1,8 +1,6 @@
 package utils
 
 import (
-	"errors"
-	"strconv"
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
@@ -14,9 +12,9 @@ type JwtClaims struct {
 }
 
 func (j JwtClaims) Valid() error {
-	if len(strconv.FormatInt(j.Uid, 10)) != 10 {
-		return errors.New("uid string error")
-	}
+	//if len(strconv.FormatInt(j.Uid, 10)) != 10 {
+	//	return errors.New("uid string error")
+	//}
 
 	if err := j.StandardClaims.Valid(); err != nil {
 		return err
