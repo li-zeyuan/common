@@ -117,8 +117,9 @@ func (seq *Sequence) NextID() uint64 {
 	ID := (uint64((seq.LastMilli)&maxTime) << timeShift) |
 		(uint64(seq.MachineID) << machineShift) |
 		(uint64(seq.Sequence))
+
 	seq.mu.Unlock()
-	return ID
+	return ID % 10000000000
 }
 
 func formatTime(start time.Time) (int64, int64) {

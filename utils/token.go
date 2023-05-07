@@ -14,7 +14,7 @@ type JwtClaims struct {
 }
 
 func (j JwtClaims) Valid() error {
-	if len(strconv.FormatInt(j.Uid, 10)) != 18 {
+	if len(strconv.FormatInt(j.Uid, 10)) != 10 {
 		return errors.New("uid string error")
 	}
 
