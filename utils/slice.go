@@ -65,7 +65,7 @@ func ExcludeSlice(all, exclude []string) []string {
 		excludeMap[e] = struct{}{}
 	}
 
-	newSlice := make([]string, len(all))
+	newSlice := make([]string, 0, len(all))
 	for _, item := range all {
 		if _, ok := excludeMap[item]; !ok {
 			newSlice = append(newSlice, item)
