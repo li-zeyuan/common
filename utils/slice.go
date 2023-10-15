@@ -55,6 +55,16 @@ func IsInArray(item int, array []int) bool {
 	return false
 }
 
+func IsInStrArray(item string, array []string) bool {
+	for _, arrayItem := range array {
+		if arrayItem == item {
+			return true
+		}
+	}
+
+	return false
+}
+
 func ExcludeSlice(all, exclude []string) []string {
 	if len(all) == 0 || len(exclude) == 0 {
 		return all

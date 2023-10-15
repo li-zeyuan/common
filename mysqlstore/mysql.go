@@ -5,7 +5,6 @@ import (
 	"time"
 
 	"github.com/li-zeyuan/common/mylogger"
-	"github.com/li-zeyuan/common/utils"
 	"go.uber.org/zap/zapcore"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
@@ -44,7 +43,7 @@ func buildLogger() zapgorm2.Logger {
 	logger.IgnoreRecordNotFoundError = true
 	logger.LogLevel = gormlogger.Info
 	logger.Context = func(ctx context.Context) []zapcore.Field {
-		return []zapcore.Field{zapcore.Field{Key: utils.RequestIdKey, Type: zapcore.StringType, String: utils.GetRequestID(ctx)}}
+		return []zapcore.Field{zapcore.Field{Key: mylogger.RequestIdKey, Type: zapcore.StringType, String: mylogger.GetRequestID(ctx)}}
 	}
 	//logger.SetAsDefault() // optional: configure gorm to use this zapgorm.Logger for callbacks
 

@@ -5,9 +5,8 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/google/uuid"
-	"github.com/li-zeyuan/common/utils"
+	"github.com/li-zeyuan/common/mylogger"
 )
-
 
 type config struct {
 	handler Handler
@@ -21,20 +20,20 @@ func RequestIdMiddleware(opts ...Option) gin.HandlerFunc {
 	}
 
 	return func(c *gin.Context) {
-		rid := c.GetHeader(utils.XRequestIDKey)
+		rid := c.GetHeader(mylogger.XRequestIDKey)
 		if rid == "" {
 			rid = uuid.New().String()
-			c.Request.Header.Add(utils.XRequestIDKey, rid)
+			c.Request.Header.Add(mylogger.XRequestIDKey, rid)
 		}
 
 		if cfg.handler != nil {
 			cfg.handler(c, rid)
 		}
 
-		ctx := context.WithValue(c.Request.Context(), utils.XRequestIDKey, rid)
+		ctx := context.WithValue(c.Request.Context(), mylogger.XRequestIDKey, rid)
 		c.Request = c.Request.WithContext(ctx)
 
-		c.Header(utils.XRequestIDKey, rid)
+		c.Header(mylogger.XRequestIDKey, rid)
 		c.Next()
 	}
 }

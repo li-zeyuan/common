@@ -16,6 +16,10 @@ func TimeStamp2Time(tStamp int64) time.Time {
 	return time.Unix(tStamp, 0)
 }
 
+func TimeStamp2UTCTimeString(tStamp int64) string {
+	return time.Unix(tStamp, 0).UTC().String()
+}
+
 func Time2TimeStamp(t time.Time) int64 {
 	return t.Unix()
 }

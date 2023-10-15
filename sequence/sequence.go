@@ -119,7 +119,7 @@ func (seq *Sequence) NextID() uint64 {
 		(uint64(seq.Sequence))
 
 	seq.mu.Unlock()
-	return ID % 10000000000
+	return ID % 1000000000000000
 }
 
 func formatTime(start time.Time) (int64, int64) {

@@ -13,6 +13,10 @@ func TestParseDay(t *testing.T) {
 	t.Log(err)
 }
 
-func TestTodayStartUTC(t *testing.T)  {
+func TestTodayStartUTC(t *testing.T) {
 	t.Log(TodayStartUTC())
+}
+
+func TestTimeStamp2TimeString(t *testing.T) {
+	t.Log(TimeStamp2UTCTimeString(1696737535))
 }
